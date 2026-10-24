@@ -1,0 +1,126 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/python/move/before"
+  },
+  "right": {
+    "label": "fixtures/python/move/after"
+  },
+  "summary": "moved `slugify` from `text/slug.py` to `url/slug.py` (1 import updated)",
+  "summaryLines": [
+    "moved `slugify` from `text/slug.py` to `url/slug.py` (1 import updated)"
+  ],
+  "stats": {
+    "operations": 1,
+    "byKind": {
+      "move": 1
+    },
+    "formattingOnlyFiles": 0,
+    "filesCompared": 3,
+    "filesChanged": 3
+  },
+  "operations": [
+    {
+      "kind": "move",
+      "symbolKind": "function",
+      "from": {
+        "name": "slugify",
+        "qualifiedName": "slugify",
+        "kind": "function",
+        "file": "text/slug.py",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 1
+          },
+          "end": {
+            "line": 3,
+            "column": 34
+          }
+        }
+      },
+      "to": {
+        "name": "slugify",
+        "qualifiedName": "slugify",
+        "kind": "function",
+        "file": "url/slug.py",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 1
+          },
+          "end": {
+            "line": 3,
+            "column": 34
+          }
+        }
+      },
+      "importsUpdated": 1,
+      "confidence": 0.97
+    }
+  ],
+  "ignoredFormatting": [],
+  "files": [
+    {
+      "path": "app.py",
+      "status": "modified",
+      "language": "python"
+    },
+    {
+      "path": "text/slug.py",
+      "status": "deleted",
+      "language": "python"
+    },
+    {
+      "path": "url/slug.py",
+      "status": "added",
+      "language": "python"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "text/slug.py",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 1
+        },
+        "end": {
+          "line": 3,
+          "column": 34
+        }
+      },
+      "kind": "move"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "url/slug.py",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 1
+        },
+        "end": {
+          "line": 3,
+          "column": 34
+        }
+      },
+      "kind": "move"
+    }
+  ],
+  "sources": {
+    "left": {
+      "app.py": "from text.slug import slugify\n\n\ndef make_link(title: str) -> str:\n    return \"/\" + slugify(title)\n",
+      "text/slug.py": "def slugify(value: str) -> str:\n    text = value.strip().lower()\n    return text.replace(\" \", \"-\")\n"
+    },
+    "right": {
+      "app.py": "from url.slug import slugify\n\n\ndef make_link(title: str) -> str:\n    return \"/\" + slugify(title)\n",
+      "url/slug.py": "def slugify(value: str) -> str:\n    text = value.strip().lower()\n    return text.replace(\" \", \"-\")\n"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "title": "TypeScript — inline a function",
+  "description": "Inline formatName into render.",
+  "exactKinds": ["inline"],
+  "operations": [
+    { "kind": "inline", "source": "formatName", "into": "render" }
+  ],
+  "summaryIncludes": ["inlined `formatName` into `render`"]
+}

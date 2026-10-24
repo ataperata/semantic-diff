@@ -1,0 +1,10 @@
+{
+  "title": "TypeScript — reorder symbols",
+  "description": "Swap top-level functions and swap methods inside Bag.",
+  "exactKinds": ["reorder", "reorder"],
+  "operations": [
+    { "kind": "reorder", "scope": "file", "before": ["beta", "alpha", "Bag"], "after": ["alpha", "beta", "Bag"] },
+    { "kind": "reorder", "scope": "class", "container": "Bag", "before": ["second", "first"], "after": ["first", "second"] }
+  ],
+  "summaryIncludes": ["reordered symbols in `src/module.ts`", "reordered methods of `Bag`"]
+}

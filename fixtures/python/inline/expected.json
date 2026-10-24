@@ -1,0 +1,9 @@
+{
+  "title": "Python — inline a function",
+  "description": "Inline format_name into render.",
+  "exactKinds": ["inline"],
+  "operations": [
+    { "kind": "inline", "source": "format_name", "into": "render" }
+  ],
+  "summaryIncludes": ["inlined `format_name` into `render`"]
+}

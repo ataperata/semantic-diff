@@ -1,0 +1,8 @@
+{
+  "title": "Python — ignore formatting",
+  "description": "Comments and blank lines do not change the normalized AST.",
+  "exactKinds": [],
+  "operations": [],
+  "formattingIgnored": ["area.py"],
+  "summaryIncludes": ["no semantic changes", "ignored pure formatting in `area.py`"]
+}

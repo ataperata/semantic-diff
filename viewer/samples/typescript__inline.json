@@ -1,0 +1,144 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/typescript/inline/before"
+  },
+  "right": {
+    "label": "fixtures/typescript/inline/after"
+  },
+  "summary": "inlined `formatName` into `render`",
+  "summaryLines": [
+    "inlined `formatName` into `render`"
+  ],
+  "stats": {
+    "operations": 1,
+    "byKind": {
+      "inline": 1
+    },
+    "formattingOnlyFiles": 0,
+    "filesCompared": 1,
+    "filesChanged": 1
+  },
+  "operations": [
+    {
+      "kind": "inline",
+      "source": {
+        "name": "formatName",
+        "qualifiedName": "formatName",
+        "kind": "function",
+        "file": "src/render.ts",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 8
+          },
+          "end": {
+            "line": 4,
+            "column": 2
+          }
+        }
+      },
+      "hostBefore": {
+        "name": "render",
+        "qualifiedName": "render",
+        "kind": "function",
+        "file": "src/render.ts",
+        "span": {
+          "start": {
+            "line": 6,
+            "column": 8
+          },
+          "end": {
+            "line": 8,
+            "column": 2
+          }
+        }
+      },
+      "hostAfter": {
+        "name": "render",
+        "qualifiedName": "render",
+        "kind": "function",
+        "file": "src/render.ts",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 8
+          },
+          "end": {
+            "line": 4,
+            "column": 2
+          }
+        }
+      },
+      "confidence": 0.9
+    }
+  ],
+  "ignoredFormatting": [],
+  "files": [
+    {
+      "path": "src/render.ts",
+      "status": "modified",
+      "language": "typescript"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "src/render.ts",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 8
+        },
+        "end": {
+          "line": 4,
+          "column": 2
+        }
+      },
+      "kind": "inline"
+    },
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "src/render.ts",
+      "span": {
+        "start": {
+          "line": 6,
+          "column": 8
+        },
+        "end": {
+          "line": 8,
+          "column": 2
+        }
+      },
+      "kind": "inline"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "src/render.ts",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 8
+        },
+        "end": {
+          "line": 4,
+          "column": 2
+        }
+      },
+      "kind": "inline"
+    }
+  ],
+  "sources": {
+    "left": {
+      "src/render.ts": "export function formatName(first: string, last: string): string {\n  const name = `${first} ${last}`;\n  return name.trim();\n}\n\nexport function render(first: string, last: string): string {\n  return formatName(first, last);\n}\n"
+    },
+    "right": {
+      "src/render.ts": "export function render(first: string, last: string): string {\n  const name = `${first} ${last}`;\n  return name.trim();\n}\n"
+    }
+  }
+}

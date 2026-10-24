@@ -1,0 +1,9 @@
+{
+  "title": "Python — extract a function",
+  "description": "Extract parse_header from read_file.",
+  "exactKinds": ["extract"],
+  "operations": [
+    { "kind": "extract", "source": "read_file", "extracted": "parse_header" }
+  ],
+  "summaryIncludes": ["extracted `parse_header` from `read_file`"]
+}

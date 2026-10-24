@@ -1,0 +1,144 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/python/inline/before"
+  },
+  "right": {
+    "label": "fixtures/python/inline/after"
+  },
+  "summary": "inlined `format_name` into `render`",
+  "summaryLines": [
+    "inlined `format_name` into `render`"
+  ],
+  "stats": {
+    "operations": 1,
+    "byKind": {
+      "inline": 1
+    },
+    "formattingOnlyFiles": 0,
+    "filesCompared": 1,
+    "filesChanged": 1
+  },
+  "operations": [
+    {
+      "kind": "inline",
+      "source": {
+        "name": "format_name",
+        "qualifiedName": "format_name",
+        "kind": "function",
+        "file": "render.py",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 1
+          },
+          "end": {
+            "line": 3,
+            "column": 24
+          }
+        }
+      },
+      "hostBefore": {
+        "name": "render",
+        "qualifiedName": "render",
+        "kind": "function",
+        "file": "render.py",
+        "span": {
+          "start": {
+            "line": 6,
+            "column": 1
+          },
+          "end": {
+            "line": 7,
+            "column": 36
+          }
+        }
+      },
+      "hostAfter": {
+        "name": "render",
+        "qualifiedName": "render",
+        "kind": "function",
+        "file": "render.py",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 1
+          },
+          "end": {
+            "line": 3,
+            "column": 24
+          }
+        }
+      },
+      "confidence": 0.9
+    }
+  ],
+  "ignoredFormatting": [],
+  "files": [
+    {
+      "path": "render.py",
+      "status": "modified",
+      "language": "python"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "render.py",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 1
+        },
+        "end": {
+          "line": 3,
+          "column": 24
+        }
+      },
+      "kind": "inline"
+    },
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "render.py",
+      "span": {
+        "start": {
+          "line": 6,
+          "column": 1
+        },
+        "end": {
+          "line": 7,
+          "column": 36
+        }
+      },
+      "kind": "inline"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "render.py",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 1
+        },
+        "end": {
+          "line": 3,
+          "column": 24
+        }
+      },
+      "kind": "inline"
+    }
+  ],
+  "sources": {
+    "left": {
+      "render.py": "def format_name(first: str, last: str) -> str:\n    name = f\"{first} {last}\"\n    return name.strip()\n\n\ndef render(first: str, last: str) -> str:\n    return format_name(first, last)\n"
+    },
+    "right": {
+      "render.py": "def render(first: str, last: str) -> str:\n    name = f\"{first} {last}\"\n    return name.strip()\n"
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/typescript/move/before"
+  },
+  "right": {
+    "label": "fixtures/typescript/move/after"
+  },
+  "summary": "moved `slugify` from `src/text/slug.ts` to `src/url/slug.ts` (1 import updated)",
+  "summaryLines": [
+    "moved `slugify` from `src/text/slug.ts` to `src/url/slug.ts` (1 import updated)"
+  ],
+  "stats": {
+    "operations": 1,
+    "byKind": {
+      "move": 1
+    },
+    "formattingOnlyFiles": 0,
+    "filesCompared": 3,
+    "filesChanged": 3
+  },
+  "operations": [
+    {
+      "kind": "move",
+      "symbolKind": "function",
+      "from": {
+        "name": "slugify",
+        "qualifiedName": "slugify",
+        "kind": "function",
+        "file": "src/text/slug.ts",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 8
+          },
+          "end": {
+            "line": 4,
+            "column": 2
+          }
+        }
+      },
+      "to": {
+        "name": "slugify",
+        "qualifiedName": "slugify",
+        "kind": "function",
+        "file": "src/url/slug.ts",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 8
+          },
+          "end": {
+            "line": 4,
+            "column": 2
+          }
+        }
+      },
+      "importsUpdated": 1,
+      "confidence": 0.97
+    }
+  ],
+  "ignoredFormatting": [],
+  "files": [
+    {
+      "path": "src/app.ts",
+      "status": "modified",
+      "language": "typescript"
+    },
+    {
+      "path": "src/text/slug.ts",
+      "status": "deleted",
+      "language": "typescript"
+    },
+    {
+      "path": "src/url/slug.ts",
+      "status": "added",
+      "language": "typescript"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "src/text/slug.ts",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 8
+        },
+        "end": {
+          "line": 4,
+          "column": 2
+        }
+      },
+      "kind": "move"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "src/url/slug.ts",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 8
+        },
+        "end": {
+          "line": 4,
+          "column": 2
+        }
+      },
+      "kind": "move"
+    }
+  ],
+  "sources": {
+    "left": {
+      "src/app.ts": "import { slugify } from \"./text/slug\";\n\nexport function makeLink(title: string): string {\n  return \"/\" + slugify(title);\n}\n",
+      "src/text/slug.ts": "export function slugify(value: string): string {\n  const text = value.trim().toLowerCase();\n  return text.replace(\" \", \"-\");\n}\n"
+    },
+    "right": {
+      "src/app.ts": "import { slugify } from \"./url/slug\";\n\nexport function makeLink(title: string): string {\n  return \"/\" + slugify(title);\n}\n",
+      "src/url/slug.ts": "export function slugify(value: string): string {\n  const text = value.trim().toLowerCase();\n  return text.replace(\" \", \"-\");\n}\n"
+    }
+  }
+}

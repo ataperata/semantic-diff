@@ -1,0 +1,11 @@
+export function foo(n: number): number {
+  const base = n * 2;
+  return base + 1;
+}
+
+export class Cart {
+  cost(n: number): number {
+    const tax = 1;
+    return n * 2 + tax;
+  }
+}

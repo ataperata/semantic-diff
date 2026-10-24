@@ -1,0 +1,9 @@
+{
+  "title": "Python — move a function between modules",
+  "description": "Move slugify from text/slug.py to url/slug.py and update the import.",
+  "exactKinds": ["move"],
+  "operations": [
+    { "kind": "move", "name": "slugify", "fromFile": "text/slug.py", "toFile": "url/slug.py", "importsUpdated": 1 }
+  ],
+  "summaryIncludes": ["moved `slugify` from `text/slug.py` to `url/slug.py`"]
+}

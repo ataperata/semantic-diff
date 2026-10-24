@@ -1,0 +1,18 @@
+{
+  "title": "TypeScript — logic edit beside formatting",
+  "description": "Comments and blank lines are ignored while the literal edits remain.",
+  "exactKinds": ["logic-edit"],
+  "operations": [
+    {
+      "kind": "logic-edit",
+      "name": "shipping",
+      "exactEdits": true,
+      "edits": [
+        { "op": "update", "before": "50", "after": "75" },
+        { "op": "update", "before": "2", "after": "3" }
+      ]
+    }
+  ],
+  "formattingIgnored": [],
+  "summaryIncludes": ["edited `shipping`"]
+}

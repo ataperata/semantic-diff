@@ -1,0 +1,46 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/python/formatting/before"
+  },
+  "right": {
+    "label": "fixtures/python/formatting/after"
+  },
+  "summary": "no semantic changes; ignored pure formatting in `area.py`",
+  "summaryLines": [
+    "no semantic changes",
+    "ignored pure formatting in `area.py`"
+  ],
+  "stats": {
+    "operations": 0,
+    "byKind": {},
+    "formattingOnlyFiles": 1,
+    "filesCompared": 1,
+    "filesChanged": 1
+  },
+  "operations": [],
+  "ignoredFormatting": [
+    {
+      "file": "area.py",
+      "reason": "normalized AST identical"
+    }
+  ],
+  "files": [
+    {
+      "path": "area.py",
+      "status": "formatting-only",
+      "language": "python"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [],
+  "sources": {
+    "left": {
+      "area.py": "def area(w, h):\n    return w * h\n\n\ndef label(name):\n    return \"area \" + name\n"
+    },
+    "right": {
+      "area.py": "def area(w, h):\n\n    # rectangle area\n    return w * h\n\n\ndef label(name):\n    return \"area \" + name\n"
+    }
+  }
+}

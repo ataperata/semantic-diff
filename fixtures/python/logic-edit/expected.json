@@ -1,0 +1,17 @@
+{
+  "title": "Python — minimal logic edit",
+  "description": "Two literal edits inside shipping, reported as leaf AST updates.",
+  "exactKinds": ["logic-edit"],
+  "operations": [
+    {
+      "kind": "logic-edit",
+      "name": "shipping",
+      "exactEdits": true,
+      "edits": [
+        { "op": "update", "before": "50", "after": "75" },
+        { "op": "update", "before": "2", "after": "3" }
+      ]
+    }
+  ],
+  "summaryIncludes": ["edited `shipping`"]
+}
