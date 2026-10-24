@@ -1,0 +1,142 @@
+[
+  {
+    "id": "typescript/extract",
+    "title": "TypeScript — extract a function",
+    "language": "typescript",
+    "file": "typescript__extract.json",
+    "summary": "extracted `parseHeader` from `readFile`"
+  },
+  {
+    "id": "typescript/formatting",
+    "title": "TypeScript — ignore formatting",
+    "language": "typescript",
+    "file": "typescript__formatting.json",
+    "summary": "no semantic changes; ignored pure formatting in `src/area.ts`"
+  },
+  {
+    "id": "typescript/inline",
+    "title": "TypeScript — inline a function",
+    "language": "typescript",
+    "file": "typescript__inline.json",
+    "summary": "inlined `formatName` into `render`"
+  },
+  {
+    "id": "typescript/logic-edit",
+    "title": "TypeScript — minimal logic edit",
+    "language": "typescript",
+    "file": "typescript__logic-edit.json",
+    "summary": "edited `shipping` (2 updates)"
+  },
+  {
+    "id": "typescript/logic-with-formatting",
+    "title": "TypeScript — logic edit beside formatting",
+    "language": "typescript",
+    "file": "typescript__logic-with-formatting.json",
+    "summary": "edited `shipping` (2 updates)"
+  },
+  {
+    "id": "typescript/mixed",
+    "title": "TypeScript — rename and extract",
+    "language": "typescript",
+    "file": "typescript__mixed.json",
+    "summary": "renamed `foo` to `bar` (2 call sites and 1 import updated); extracted `parseHeader` from `readFile`"
+  },
+  {
+    "id": "typescript/move",
+    "title": "TypeScript — move a function between files",
+    "language": "typescript",
+    "file": "typescript__move.json",
+    "summary": "moved `slugify` from `src/text/slug.ts` to `src/url/slug.ts` (1 import updated)"
+  },
+  {
+    "id": "typescript/rename",
+    "title": "TypeScript — rename a function and a method",
+    "language": "typescript",
+    "file": "typescript__rename.json",
+    "summary": "renamed `foo` to `bar` (3 call sites and 1 import updated); renamed `Cart.cost` to `Cart.price` (1 call site updated)"
+  },
+  {
+    "id": "typescript/reorder",
+    "title": "TypeScript — reorder symbols",
+    "language": "typescript",
+    "file": "typescript__reorder.json",
+    "summary": "reordered symbols in `src/module.ts` (`beta`, `alpha`, `Bag` → `alpha`, `beta`, `Bag`); reordered methods of `Bag` in `src/module.ts` (`second`, `first` → `first`, `second`)"
+  },
+  {
+    "id": "typescript/signature",
+    "title": "TypeScript — signature change",
+    "language": "typescript",
+    "file": "typescript__signature.json",
+    "summary": "signature of `connect` changed (added param `timeout`, return type `string` → `Promise<string>`)"
+  },
+  {
+    "id": "python/extract",
+    "title": "Python — extract a function",
+    "language": "python",
+    "file": "python__extract.json",
+    "summary": "extracted `parse_header` from `read_file`"
+  },
+  {
+    "id": "python/formatting",
+    "title": "Python — ignore formatting",
+    "language": "python",
+    "file": "python__formatting.json",
+    "summary": "no semantic changes; ignored pure formatting in `area.py`"
+  },
+  {
+    "id": "python/inline",
+    "title": "Python — inline a function",
+    "language": "python",
+    "file": "python__inline.json",
+    "summary": "inlined `format_name` into `render`"
+  },
+  {
+    "id": "python/logic-edit",
+    "title": "Python — minimal logic edit",
+    "language": "python",
+    "file": "python__logic-edit.json",
+    "summary": "edited `shipping` (2 updates)"
+  },
+  {
+    "id": "python/logic-with-formatting",
+    "title": "Python — logic edit beside formatting",
+    "language": "python",
+    "file": "python__logic-with-formatting.json",
+    "summary": "edited `shipping` (2 updates)"
+  },
+  {
+    "id": "python/mixed",
+    "title": "Python — rename and extract",
+    "language": "python",
+    "file": "python__mixed.json",
+    "summary": "renamed `foo` to `bar` (2 call sites and 1 import updated); extracted `parse_header` from `read_file`"
+  },
+  {
+    "id": "python/move",
+    "title": "Python — move a function between modules",
+    "language": "python",
+    "file": "python__move.json",
+    "summary": "moved `slugify` from `text/slug.py` to `url/slug.py` (1 import updated)"
+  },
+  {
+    "id": "python/rename",
+    "title": "Python — rename a function and a method",
+    "language": "python",
+    "file": "python__rename.json",
+    "summary": "renamed `foo` to `bar` (3 call sites and 1 import updated); renamed `Cart.cost` to `Cart.price` (1 call site updated)"
+  },
+  {
+    "id": "python/reorder",
+    "title": "Python — reorder symbols",
+    "language": "python",
+    "file": "python__reorder.json",
+    "summary": "reordered symbols in `module.py` (`beta`, `alpha`, `Bag` → `alpha`, `beta`, `Bag`); reordered methods of `Bag` in `module.py` (`second`, `first` → `first`, `second`)"
+  },
+  {
+    "id": "python/signature",
+    "title": "Python — signature change",
+    "language": "python",
+    "file": "python__signature.json",
+    "summary": "signature of `connect` changed (added param `timeout`)"
+  }
+]

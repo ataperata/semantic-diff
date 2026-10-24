@@ -1,0 +1,124 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/typescript/signature/before"
+  },
+  "right": {
+    "label": "fixtures/typescript/signature/after"
+  },
+  "summary": "signature of `connect` changed (added param `timeout`, return type `string` → `Promise<string>`)",
+  "summaryLines": [
+    "signature of `connect` changed (added param `timeout`, return type `string` → `Promise<string>`)"
+  ],
+  "stats": {
+    "operations": 1,
+    "byKind": {
+      "signature-change": 1
+    },
+    "formattingOnlyFiles": 0,
+    "filesCompared": 1,
+    "filesChanged": 1
+  },
+  "operations": [
+    {
+      "kind": "signature-change",
+      "symbolKind": "function",
+      "name": "connect",
+      "qualifiedName": "connect",
+      "from": {
+        "name": "connect",
+        "qualifiedName": "connect",
+        "kind": "function",
+        "file": "src/net.ts",
+        "span": {
+          "start": {
+            "line": 5,
+            "column": 8
+          },
+          "end": {
+            "line": 7,
+            "column": 2
+          }
+        }
+      },
+      "to": {
+        "name": "connect",
+        "qualifiedName": "connect",
+        "kind": "function",
+        "file": "src/net.ts",
+        "span": {
+          "start": {
+            "line": 5,
+            "column": 8
+          },
+          "end": {
+            "line": 7,
+            "column": 2
+          }
+        }
+      },
+      "addedParams": [
+        "timeout"
+      ],
+      "removedParams": [],
+      "changedParams": [],
+      "returnType": {
+        "from": "string",
+        "to": "Promise<string>"
+      },
+      "confidence": 0.95
+    }
+  ],
+  "ignoredFormatting": [],
+  "files": [
+    {
+      "path": "src/net.ts",
+      "status": "modified",
+      "language": "typescript"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "src/net.ts",
+      "span": {
+        "start": {
+          "line": 5,
+          "column": 8
+        },
+        "end": {
+          "line": 7,
+          "column": 2
+        }
+      },
+      "kind": "signature-change"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "src/net.ts",
+      "span": {
+        "start": {
+          "line": 5,
+          "column": 8
+        },
+        "end": {
+          "line": 7,
+          "column": 2
+        }
+      },
+      "kind": "signature-change"
+    }
+  ],
+  "sources": {
+    "left": {
+      "src/net.ts": "export function openSocket(url: string): string {\n  return url;\n}\n\nexport function connect(url: string): string {\n  return openSocket(url);\n}\n"
+    },
+    "right": {
+      "src/net.ts": "export function openSocket(url: string): string {\n  return url;\n}\n\nexport function connect(url: string, timeout = 30): Promise<string> {\n  return openSocket(url);\n}\n"
+    }
+  }
+}

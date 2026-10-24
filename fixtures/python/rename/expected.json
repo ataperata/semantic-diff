@@ -1,0 +1,11 @@
+{
+  "title": "Python — rename a function and a method",
+  "description": "Rename foo to bar and Cart.cost to Cart.price, updating call sites and the import.",
+  "summary": "renamed `foo` to `bar` (3 call sites and 1 import updated); renamed `Cart.cost` to `Cart.price` (1 call site updated)",
+  "exactKinds": ["rename", "rename"],
+  "operations": [
+    { "kind": "rename", "from": "foo", "to": "bar", "callSitesUpdated": 3, "importsUpdated": 1 },
+    { "kind": "rename", "from": "cost", "to": "price", "qualifiedFrom": "Cart.cost", "qualifiedTo": "Cart.price", "callSitesUpdated": 1 }
+  ],
+  "summaryIncludes": ["renamed `foo` to `bar`", "renamed `Cart.cost` to `Cart.price`"]
+}

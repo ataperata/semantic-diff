@@ -1,0 +1,144 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/typescript/extract/before"
+  },
+  "right": {
+    "label": "fixtures/typescript/extract/after"
+  },
+  "summary": "extracted `parseHeader` from `readFile`",
+  "summaryLines": [
+    "extracted `parseHeader` from `readFile`"
+  ],
+  "stats": {
+    "operations": 1,
+    "byKind": {
+      "extract": 1
+    },
+    "formattingOnlyFiles": 0,
+    "filesCompared": 1,
+    "filesChanged": 1
+  },
+  "operations": [
+    {
+      "kind": "extract",
+      "source": {
+        "name": "readFile",
+        "qualifiedName": "readFile",
+        "kind": "function",
+        "file": "src/read.ts",
+        "span": {
+          "start": {
+            "line": 3,
+            "column": 8
+          },
+          "end": {
+            "line": 11,
+            "column": 2
+          }
+        }
+      },
+      "host": {
+        "name": "readFile",
+        "qualifiedName": "readFile",
+        "kind": "function",
+        "file": "src/read.ts",
+        "span": {
+          "start": {
+            "line": 12,
+            "column": 8
+          },
+          "end": {
+            "line": 15,
+            "column": 2
+          }
+        }
+      },
+      "extracted": {
+        "name": "parseHeader",
+        "qualifiedName": "parseHeader",
+        "kind": "function",
+        "file": "src/read.ts",
+        "span": {
+          "start": {
+            "line": 3,
+            "column": 8
+          },
+          "end": {
+            "line": 10,
+            "column": 2
+          }
+        }
+      },
+      "confidence": 0.91
+    }
+  ],
+  "ignoredFormatting": [],
+  "files": [
+    {
+      "path": "src/read.ts",
+      "status": "modified",
+      "language": "typescript"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "src/read.ts",
+      "span": {
+        "start": {
+          "line": 3,
+          "column": 8
+        },
+        "end": {
+          "line": 11,
+          "column": 2
+        }
+      },
+      "kind": "extract"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "src/read.ts",
+      "span": {
+        "start": {
+          "line": 12,
+          "column": 8
+        },
+        "end": {
+          "line": 15,
+          "column": 2
+        }
+      },
+      "kind": "extract"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "src/read.ts",
+      "span": {
+        "start": {
+          "line": 3,
+          "column": 8
+        },
+        "end": {
+          "line": 10,
+          "column": 2
+        }
+      },
+      "kind": "extract"
+    }
+  ],
+  "sources": {
+    "left": {
+      "src/read.ts": "import { readFileSync } from \"node:fs\";\n\nexport function readFile(path: string): string {\n  const text = readFileSync(path, \"utf8\");\n  const lines = text.split(\"\\n\");\n  const header = lines[0]?.trim() ?? \"\";\n  if (header.length === 0) {\n    throw new Error(\"missing header\");\n  }\n  return header;\n}\n"
+    },
+    "right": {
+      "src/read.ts": "import { readFileSync } from \"node:fs\";\n\nexport function parseHeader(text: string): string {\n  const lines = text.split(\"\\n\");\n  const header = lines[0]?.trim() ?? \"\";\n  if (header.length === 0) {\n    throw new Error(\"missing header\");\n  }\n  return header;\n}\n\nexport function readFile(path: string): string {\n  const text = readFileSync(path, \"utf8\");\n  return parseHeader(text);\n}\n"
+    }
+  }
+}

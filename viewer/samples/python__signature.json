@@ -1,0 +1,120 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/python/signature/before"
+  },
+  "right": {
+    "label": "fixtures/python/signature/after"
+  },
+  "summary": "signature of `connect` changed (added param `timeout`)",
+  "summaryLines": [
+    "signature of `connect` changed (added param `timeout`)"
+  ],
+  "stats": {
+    "operations": 1,
+    "byKind": {
+      "signature-change": 1
+    },
+    "formattingOnlyFiles": 0,
+    "filesCompared": 1,
+    "filesChanged": 1
+  },
+  "operations": [
+    {
+      "kind": "signature-change",
+      "symbolKind": "function",
+      "name": "connect",
+      "qualifiedName": "connect",
+      "from": {
+        "name": "connect",
+        "qualifiedName": "connect",
+        "kind": "function",
+        "file": "net.py",
+        "span": {
+          "start": {
+            "line": 5,
+            "column": 1
+          },
+          "end": {
+            "line": 6,
+            "column": 28
+          }
+        }
+      },
+      "to": {
+        "name": "connect",
+        "qualifiedName": "connect",
+        "kind": "function",
+        "file": "net.py",
+        "span": {
+          "start": {
+            "line": 5,
+            "column": 1
+          },
+          "end": {
+            "line": 6,
+            "column": 28
+          }
+        }
+      },
+      "addedParams": [
+        "timeout"
+      ],
+      "removedParams": [],
+      "changedParams": [],
+      "confidence": 0.95
+    }
+  ],
+  "ignoredFormatting": [],
+  "files": [
+    {
+      "path": "net.py",
+      "status": "modified",
+      "language": "python"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "net.py",
+      "span": {
+        "start": {
+          "line": 5,
+          "column": 1
+        },
+        "end": {
+          "line": 6,
+          "column": 28
+        }
+      },
+      "kind": "signature-change"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "net.py",
+      "span": {
+        "start": {
+          "line": 5,
+          "column": 1
+        },
+        "end": {
+          "line": 6,
+          "column": 28
+        }
+      },
+      "kind": "signature-change"
+    }
+  ],
+  "sources": {
+    "left": {
+      "net.py": "def open_socket(url: str) -> str:\n    return url\n\n\ndef connect(url: str) -> str:\n    return open_socket(url)\n"
+    },
+    "right": {
+      "net.py": "def open_socket(url: str) -> str:\n    return url\n\n\ndef connect(url: str, timeout: int = 30) -> str:\n    return open_socket(url)\n"
+    }
+  }
+}

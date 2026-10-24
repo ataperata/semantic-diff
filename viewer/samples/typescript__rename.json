@@ -1,0 +1,194 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/typescript/rename/before"
+  },
+  "right": {
+    "label": "fixtures/typescript/rename/after"
+  },
+  "summary": "renamed `foo` to `bar` (3 call sites and 1 import updated); renamed `Cart.cost` to `Cart.price` (1 call site updated)",
+  "summaryLines": [
+    "renamed `foo` to `bar` (3 call sites and 1 import updated)",
+    "renamed `Cart.cost` to `Cart.price` (1 call site updated)"
+  ],
+  "stats": {
+    "operations": 2,
+    "byKind": {
+      "rename": 2
+    },
+    "formattingOnlyFiles": 0,
+    "filesCompared": 2,
+    "filesChanged": 2
+  },
+  "operations": [
+    {
+      "kind": "rename",
+      "symbolKind": "function",
+      "from": {
+        "name": "foo",
+        "qualifiedName": "foo",
+        "kind": "function",
+        "file": "src/math.ts",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 8
+          },
+          "end": {
+            "line": 4,
+            "column": 2
+          }
+        }
+      },
+      "to": {
+        "name": "bar",
+        "qualifiedName": "bar",
+        "kind": "function",
+        "file": "src/math.ts",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 8
+          },
+          "end": {
+            "line": 4,
+            "column": 2
+          }
+        }
+      },
+      "callSitesUpdated": 3,
+      "importsUpdated": 1,
+      "confidence": 0.98
+    },
+    {
+      "kind": "rename",
+      "symbolKind": "method",
+      "from": {
+        "name": "cost",
+        "qualifiedName": "Cart.cost",
+        "kind": "method",
+        "file": "src/math.ts",
+        "span": {
+          "start": {
+            "line": 7,
+            "column": 3
+          },
+          "end": {
+            "line": 10,
+            "column": 4
+          }
+        }
+      },
+      "to": {
+        "name": "price",
+        "qualifiedName": "Cart.price",
+        "kind": "method",
+        "file": "src/math.ts",
+        "span": {
+          "start": {
+            "line": 7,
+            "column": 3
+          },
+          "end": {
+            "line": 10,
+            "column": 4
+          }
+        }
+      },
+      "callSitesUpdated": 1,
+      "importsUpdated": 0,
+      "confidence": 0.98
+    }
+  ],
+  "ignoredFormatting": [],
+  "files": [
+    {
+      "path": "src/app.ts",
+      "status": "modified",
+      "language": "typescript"
+    },
+    {
+      "path": "src/math.ts",
+      "status": "modified",
+      "language": "typescript"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "src/math.ts",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 8
+        },
+        "end": {
+          "line": 4,
+          "column": 2
+        }
+      },
+      "kind": "rename"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "src/math.ts",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 8
+        },
+        "end": {
+          "line": 4,
+          "column": 2
+        }
+      },
+      "kind": "rename"
+    },
+    {
+      "opIndex": 1,
+      "side": "left",
+      "file": "src/math.ts",
+      "span": {
+        "start": {
+          "line": 7,
+          "column": 3
+        },
+        "end": {
+          "line": 10,
+          "column": 4
+        }
+      },
+      "kind": "rename"
+    },
+    {
+      "opIndex": 1,
+      "side": "right",
+      "file": "src/math.ts",
+      "span": {
+        "start": {
+          "line": 7,
+          "column": 3
+        },
+        "end": {
+          "line": 10,
+          "column": 4
+        }
+      },
+      "kind": "rename"
+    }
+  ],
+  "sources": {
+    "left": {
+      "src/app.ts": "import { Cart, foo } from \"./math\";\n\nexport function run(x: number): number {\n  const cart = new Cart();\n  const a = foo(x);\n  const b = foo(a);\n  return foo(b) + cart.cost(b);\n}\n",
+      "src/math.ts": "export function foo(n: number): number {\n  const base = n * 2;\n  return base + 1;\n}\n\nexport class Cart {\n  cost(n: number): number {\n    const tax = 1;\n    return n * 2 + tax;\n  }\n}\n"
+    },
+    "right": {
+      "src/app.ts": "import { Cart, bar } from \"./math\";\n\nexport function run(x: number): number {\n  const cart = new Cart();\n  const a = bar(x);\n  const b = bar(a);\n  return bar(b) + cart.price(b);\n}\n",
+      "src/math.ts": "export function bar(n: number): number {\n  const base = n * 2;\n  return base + 1;\n}\n\nexport class Cart {\n  price(n: number): number {\n    const tax = 1;\n    return n * 2 + tax;\n  }\n}\n"
+    }
+  }
+}

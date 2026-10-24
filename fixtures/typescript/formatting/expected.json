@@ -1,0 +1,8 @@
+{
+  "title": "TypeScript — ignore formatting",
+  "description": "Comments, blank lines, a trailing comma, semicolons, and quote style do not change the normalized AST.",
+  "exactKinds": [],
+  "operations": [],
+  "formattingIgnored": ["src/area.ts"],
+  "summaryIncludes": ["no semantic changes", "ignored pure formatting in `src/area.ts`"]
+}

@@ -1,0 +1,9 @@
+{
+  "title": "TypeScript — move a function between files",
+  "description": "Move slugify from src/text/slug.ts to src/url/slug.ts and update the import.",
+  "exactKinds": ["move"],
+  "operations": [
+    { "kind": "move", "name": "slugify", "fromFile": "src/text/slug.ts", "toFile": "src/url/slug.ts", "importsUpdated": 1 }
+  ],
+  "summaryIncludes": ["moved `slugify` from `src/text/slug.ts` to `src/url/slug.ts`"]
+}

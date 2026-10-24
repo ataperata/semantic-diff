@@ -1,0 +1,11 @@
+{
+  "title": "Python — rename and extract",
+  "description": "A review-sized change that renames foo and extracts parse_header.",
+  "summary": "renamed `foo` to `bar` (2 call sites and 1 import updated); extracted `parse_header` from `read_file`",
+  "exactKinds": ["rename", "extract"],
+  "operations": [
+    { "kind": "rename", "from": "foo", "to": "bar", "callSitesUpdated": 2, "importsUpdated": 1 },
+    { "kind": "extract", "source": "read_file", "extracted": "parse_header" }
+  ],
+  "summaryIncludes": ["renamed `foo` to `bar` (2 call sites and 1 import updated)", "extracted `parse_header` from `read_file`"]
+}

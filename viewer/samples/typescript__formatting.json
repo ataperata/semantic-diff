@@ -1,0 +1,46 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/typescript/formatting/before"
+  },
+  "right": {
+    "label": "fixtures/typescript/formatting/after"
+  },
+  "summary": "no semantic changes; ignored pure formatting in `src/area.ts`",
+  "summaryLines": [
+    "no semantic changes",
+    "ignored pure formatting in `src/area.ts`"
+  ],
+  "stats": {
+    "operations": 0,
+    "byKind": {},
+    "formattingOnlyFiles": 1,
+    "filesCompared": 1,
+    "filesChanged": 1
+  },
+  "operations": [],
+  "ignoredFormatting": [
+    {
+      "file": "src/area.ts",
+      "reason": "normalized AST identical"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/area.ts",
+      "status": "formatting-only",
+      "language": "typescript"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [],
+  "sources": {
+    "left": {
+      "src/area.ts": "export function area(w: number, h: number): number {\n  return w * h;\n}\n\nexport function label(name: string): string {\n  return \"area \" + name;\n}\n"
+    },
+    "right": {
+      "src/area.ts": "export function area(w: number, h: number,): number {\n\n  // rectangle area\n  return w * h\n}\n\nexport function label(name: string): string {\n  return 'area ' + name;\n}\n"
+    }
+  }
+}

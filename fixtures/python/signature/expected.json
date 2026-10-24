@@ -1,0 +1,9 @@
+{
+  "title": "Python — signature change",
+  "description": "Add a timeout parameter with a default. The function body is unchanged.",
+  "exactKinds": ["signature-change"],
+  "operations": [
+    { "kind": "signature-change", "name": "connect", "addedParams": ["timeout"] }
+  ],
+  "summaryIncludes": ["signature of `connect` changed", "added param `timeout`"]
+}

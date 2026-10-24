@@ -1,0 +1,231 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/typescript/mixed/before"
+  },
+  "right": {
+    "label": "fixtures/typescript/mixed/after"
+  },
+  "summary": "renamed `foo` to `bar` (2 call sites and 1 import updated); extracted `parseHeader` from `readFile`",
+  "summaryLines": [
+    "renamed `foo` to `bar` (2 call sites and 1 import updated)",
+    "extracted `parseHeader` from `readFile`"
+  ],
+  "stats": {
+    "operations": 2,
+    "byKind": {
+      "rename": 1,
+      "extract": 1
+    },
+    "formattingOnlyFiles": 0,
+    "filesCompared": 3,
+    "filesChanged": 3
+  },
+  "operations": [
+    {
+      "kind": "rename",
+      "symbolKind": "function",
+      "from": {
+        "name": "foo",
+        "qualifiedName": "foo",
+        "kind": "function",
+        "file": "src/math.ts",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 8
+          },
+          "end": {
+            "line": 4,
+            "column": 2
+          }
+        }
+      },
+      "to": {
+        "name": "bar",
+        "qualifiedName": "bar",
+        "kind": "function",
+        "file": "src/math.ts",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 8
+          },
+          "end": {
+            "line": 4,
+            "column": 2
+          }
+        }
+      },
+      "callSitesUpdated": 2,
+      "importsUpdated": 1,
+      "confidence": 0.98
+    },
+    {
+      "kind": "extract",
+      "source": {
+        "name": "readFile",
+        "qualifiedName": "readFile",
+        "kind": "function",
+        "file": "src/read.ts",
+        "span": {
+          "start": {
+            "line": 3,
+            "column": 8
+          },
+          "end": {
+            "line": 11,
+            "column": 2
+          }
+        }
+      },
+      "host": {
+        "name": "readFile",
+        "qualifiedName": "readFile",
+        "kind": "function",
+        "file": "src/read.ts",
+        "span": {
+          "start": {
+            "line": 12,
+            "column": 8
+          },
+          "end": {
+            "line": 15,
+            "column": 2
+          }
+        }
+      },
+      "extracted": {
+        "name": "parseHeader",
+        "qualifiedName": "parseHeader",
+        "kind": "function",
+        "file": "src/read.ts",
+        "span": {
+          "start": {
+            "line": 3,
+            "column": 8
+          },
+          "end": {
+            "line": 10,
+            "column": 2
+          }
+        }
+      },
+      "confidence": 0.91
+    }
+  ],
+  "ignoredFormatting": [],
+  "files": [
+    {
+      "path": "src/app.ts",
+      "status": "modified",
+      "language": "typescript"
+    },
+    {
+      "path": "src/math.ts",
+      "status": "modified",
+      "language": "typescript"
+    },
+    {
+      "path": "src/read.ts",
+      "status": "modified",
+      "language": "typescript"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "src/math.ts",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 8
+        },
+        "end": {
+          "line": 4,
+          "column": 2
+        }
+      },
+      "kind": "rename"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "src/math.ts",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 8
+        },
+        "end": {
+          "line": 4,
+          "column": 2
+        }
+      },
+      "kind": "rename"
+    },
+    {
+      "opIndex": 1,
+      "side": "left",
+      "file": "src/read.ts",
+      "span": {
+        "start": {
+          "line": 3,
+          "column": 8
+        },
+        "end": {
+          "line": 11,
+          "column": 2
+        }
+      },
+      "kind": "extract"
+    },
+    {
+      "opIndex": 1,
+      "side": "right",
+      "file": "src/read.ts",
+      "span": {
+        "start": {
+          "line": 12,
+          "column": 8
+        },
+        "end": {
+          "line": 15,
+          "column": 2
+        }
+      },
+      "kind": "extract"
+    },
+    {
+      "opIndex": 1,
+      "side": "right",
+      "file": "src/read.ts",
+      "span": {
+        "start": {
+          "line": 3,
+          "column": 8
+        },
+        "end": {
+          "line": 10,
+          "column": 2
+        }
+      },
+      "kind": "extract"
+    }
+  ],
+  "sources": {
+    "left": {
+      "src/app.ts": "import { foo } from \"./math\";\n\nexport function run(x: number): number {\n  const a = foo(x);\n  return foo(a);\n}\n",
+      "src/math.ts": "export function foo(n: number): number {\n  const base = n * 2;\n  return base + 1;\n}\n",
+      "src/read.ts": "import { readFileSync } from \"node:fs\";\n\nexport function readFile(path: string): string {\n  const text = readFileSync(path, \"utf8\");\n  const lines = text.split(\"\\n\");\n  const header = lines[0]?.trim() ?? \"\";\n  if (header.length === 0) {\n    throw new Error(\"missing header\");\n  }\n  return header;\n}\n"
+    },
+    "right": {
+      "src/app.ts": "import { bar } from \"./math\";\n\nexport function run(x: number): number {\n  const a = bar(x);\n  return bar(a);\n}\n",
+      "src/math.ts": "export function bar(n: number): number {\n  const base = n * 2;\n  return base + 1;\n}\n",
+      "src/read.ts": "import { readFileSync } from \"node:fs\";\n\nexport function parseHeader(text: string): string {\n  const lines = text.split(\"\\n\");\n  const header = lines[0]?.trim() ?? \"\";\n  if (header.length === 0) {\n    throw new Error(\"missing header\");\n  }\n  return header;\n}\n\nexport function readFile(path: string): string {\n  const text = readFileSync(path, \"utf8\");\n  return parseHeader(text);\n}\n"
+    }
+  }
+}

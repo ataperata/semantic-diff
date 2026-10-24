@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ataperata/semantic-diff/schema/report.schema.json",
+  "title": "semantic-diff report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tool", "version", "left", "right", "summary", "summaryLines", "stats", "operations", "ignoredFormatting", "files", "parseDiagnostics", "highlights"],
+  "properties": {
+    "tool": { "const": "semantic-diff" },
+    "version": { "const": 1 },
+    "left": { "$ref": "#/$defs/side" },
+    "right": { "$ref": "#/$defs/side" },
+    "summary": { "type": "string", "description": "One paragraph, operations joined by semicolons." },
+    "summaryLines": { "type": "array", "items": { "type": "string" } },
+    "stats": {
+      "type": "object",
+      "required": ["operations", "byKind", "formattingOnlyFiles", "filesCompared", "filesChanged"],
+      "properties": {
+        "operations": { "type": "integer" },
+        "byKind": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "formattingOnlyFiles": { "type": "integer" },
+        "filesCompared": { "type": "integer" },
+        "filesChanged": { "type": "integer" }
+      }
+    },
+    "operations": { "type": "array", "items": { "$ref": "#/$defs/operation" } },
+    "ignoredFormatting": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "reason"],
+        "properties": { "file": { "type": "string" }, "reason": { "type": "string" } }
+      }
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "status"],
+        "properties": {
+          "path": { "type": "string" },
+          "status": { "enum": ["added", "deleted", "modified", "formatting-only", "unchanged"] },
+          "language": { "enum": ["typescript", "python"] }
+        }
+      }
+    },
+    "parseDiagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "side", "message"],
+        "properties": {
+          "file": { "type": "string" },
+          "side": { "enum": ["left", "right"] },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    "highlights": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["opIndex", "side", "file", "span", "kind"],
+        "properties": {
+          "opIndex": { "type": "integer" },
+          "side": { "enum": ["left", "right"] },
+          "file": { "type": "string" },
+          "span": { "$ref": "#/$defs/span" },
+          "kind": { "type": "string" }
+        }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "properties": {
+        "left": { "type": "object", "additionalProperties": { "type": "string" } },
+        "right": { "type": "object", "additionalProperties": { "type": "string" } }
+      }
+    },
+    "debug": { "type": "object" }
+  },
+  "$defs": {
+    "side": {
+      "type": "object",
+      "required": ["label"],
+      "properties": { "label": { "type": "string" } }
+    },
+    "point": {
+      "type": "object",
+      "required": ["line", "column"],
+      "properties": {
+        "line": { "type": "integer", "minimum": 1 },
+        "column": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "span": {
+      "type": "object",
+      "required": ["start", "end"],
+      "properties": { "start": { "$ref": "#/$defs/point" }, "end": { "$ref": "#/$defs/point" } }
+    },
+    "symbolRef": {
+      "type": "object",
+      "required": ["name", "qualifiedName", "kind", "file", "span"],
+      "properties": {
+        "name": { "type": "string" },
+        "qualifiedName": { "type": "string" },
+        "kind": { "enum": ["function", "method", "class"] },
+        "file": { "type": "string" },
+        "span": { "$ref": "#/$defs/span" }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "required": ["kind", "confidence"],
+      "properties": {
+        "kind": {
+          "enum": ["rename", "move", "rename-move", "extract", "inline", "signature-change", "reorder", "logic-edit", "add", "remove"]
+        },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

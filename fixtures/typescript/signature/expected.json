@@ -1,0 +1,9 @@
+{
+  "title": "TypeScript — signature change",
+  "description": "Add a timeout parameter and change the return type of connect without editing its body.",
+  "exactKinds": ["signature-change"],
+  "operations": [
+    { "kind": "signature-change", "name": "connect", "addedParams": ["timeout"], "returnFrom": "string", "returnTo": "Promise<string>" }
+  ],
+  "summaryIncludes": ["signature of `connect` changed", "added param `timeout`"]
+}

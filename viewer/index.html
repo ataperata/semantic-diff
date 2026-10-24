@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>semantic-diff</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,620&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@380;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top">
+        <div class="brand">
+          <span class="mark" aria-hidden="true"></span>
+          <div>
+            <p class="eyebrow">semantic diff</p>
+            <h1>What changed, besides the diff</h1>
+          </div>
+        </div>
+        <p id="summary" class="summary">Load a report to see renames, moves, extracts, and the logic that remains.</p>
+        <div class="toolbar">
+          <label class="field">
+            <span>Example</span>
+            <select id="sample"></select>
+          </label>
+          <label class="file-button">
+            Open JSON
+            <input id="file" type="file" accept="application/json,.json" />
+          </label>
+          <div id="filters" class="filters" role="toolbar" aria-label="Filter operations"></div>
+        </div>
+      </header>
+      <aside id="ops" class="ops" aria-label="Semantic operations"></aside>
+      <main class="stage">
+        <section class="pane" id="left-pane" aria-label="Before"></section>
+        <section class="pane" id="right-pane" aria-label="After"></section>
+      </main>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

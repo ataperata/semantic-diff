@@ -1,0 +1,9 @@
+{
+  "title": "TypeScript — extract a function",
+  "description": "Extract parseHeader from readFile.",
+  "exactKinds": ["extract"],
+  "operations": [
+    { "kind": "extract", "source": "readFile", "extracted": "parseHeader" }
+  ],
+  "summaryIncludes": ["extracted `parseHeader` from `readFile`"]
+}

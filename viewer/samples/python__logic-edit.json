@@ -1,0 +1,206 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/python/logic-edit/before"
+  },
+  "right": {
+    "label": "fixtures/python/logic-edit/after"
+  },
+  "summary": "edited `shipping` (2 updates)",
+  "summaryLines": [
+    "edited `shipping` (2 updates)"
+  ],
+  "stats": {
+    "operations": 1,
+    "byKind": {
+      "logic-edit": 1
+    },
+    "formattingOnlyFiles": 0,
+    "filesCompared": 1,
+    "filesChanged": 1
+  },
+  "operations": [
+    {
+      "kind": "logic-edit",
+      "symbol": {
+        "name": "shipping",
+        "qualifiedName": "shipping",
+        "kind": "function",
+        "file": "shipping.py",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 1
+          },
+          "end": {
+            "line": 5,
+            "column": 29
+          }
+        }
+      },
+      "before": {
+        "name": "shipping",
+        "qualifiedName": "shipping",
+        "kind": "function",
+        "file": "shipping.py",
+        "span": {
+          "start": {
+            "line": 1,
+            "column": 1
+          },
+          "end": {
+            "line": 5,
+            "column": 29
+          }
+        }
+      },
+      "edits": [
+        {
+          "op": "update",
+          "nodeType": "integer",
+          "before": {
+            "span": {
+              "start": {
+                "line": 3,
+                "column": 16
+              },
+              "end": {
+                "line": 3,
+                "column": 18
+              }
+            },
+            "text": "50"
+          },
+          "after": {
+            "span": {
+              "start": {
+                "line": 3,
+                "column": 16
+              },
+              "end": {
+                "line": 3,
+                "column": 18
+              }
+            },
+            "text": "75"
+          }
+        },
+        {
+          "op": "update",
+          "nodeType": "integer",
+          "before": {
+            "span": {
+              "start": {
+                "line": 5,
+                "column": 28
+              },
+              "end": {
+                "line": 5,
+                "column": 29
+              }
+            },
+            "text": "2"
+          },
+          "after": {
+            "span": {
+              "start": {
+                "line": 5,
+                "column": 28
+              },
+              "end": {
+                "line": 5,
+                "column": 29
+              }
+            },
+            "text": "3"
+          }
+        }
+      ],
+      "confidence": 0.9
+    }
+  ],
+  "ignoredFormatting": [],
+  "files": [
+    {
+      "path": "shipping.py",
+      "status": "modified",
+      "language": "python"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "shipping.py",
+      "span": {
+        "start": {
+          "line": 3,
+          "column": 16
+        },
+        "end": {
+          "line": 3,
+          "column": 18
+        }
+      },
+      "kind": "logic-edit"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "shipping.py",
+      "span": {
+        "start": {
+          "line": 3,
+          "column": 16
+        },
+        "end": {
+          "line": 3,
+          "column": 18
+        }
+      },
+      "kind": "logic-edit"
+    },
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "shipping.py",
+      "span": {
+        "start": {
+          "line": 5,
+          "column": 28
+        },
+        "end": {
+          "line": 5,
+          "column": 29
+        }
+      },
+      "kind": "logic-edit"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "shipping.py",
+      "span": {
+        "start": {
+          "line": 5,
+          "column": 28
+        },
+        "end": {
+          "line": 5,
+          "column": 29
+        }
+      },
+      "kind": "logic-edit"
+    }
+  ],
+  "sources": {
+    "left": {
+      "shipping.py": "def shipping(total: int, weight: int) -> int:\n    base = 5\n    if total > 50:\n        return 0\n    return base + weight * 2\n\n\ndef note() -> str:\n    return \"standard\"\n"
+    },
+    "right": {
+      "shipping.py": "def shipping(total: int, weight: int) -> int:\n    base = 5\n    if total > 75:\n        return 0\n    return base + weight * 3\n\n\ndef note() -> str:\n    return \"standard\"\n"
+    }
+  }
+}

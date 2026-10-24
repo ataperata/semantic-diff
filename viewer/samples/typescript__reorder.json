@@ -1,0 +1,366 @@
+{
+  "tool": "semantic-diff",
+  "version": 1,
+  "left": {
+    "label": "fixtures/typescript/reorder/before"
+  },
+  "right": {
+    "label": "fixtures/typescript/reorder/after"
+  },
+  "summary": "reordered symbols in `src/module.ts` (`beta`, `alpha`, `Bag` → `alpha`, `beta`, `Bag`); reordered methods of `Bag` in `src/module.ts` (`second`, `first` → `first`, `second`)",
+  "summaryLines": [
+    "reordered symbols in `src/module.ts` (`beta`, `alpha`, `Bag` → `alpha`, `beta`, `Bag`)",
+    "reordered methods of `Bag` in `src/module.ts` (`second`, `first` → `first`, `second`)"
+  ],
+  "stats": {
+    "operations": 2,
+    "byKind": {
+      "reorder": 2
+    },
+    "formattingOnlyFiles": 0,
+    "filesCompared": 1,
+    "filesChanged": 1
+  },
+  "operations": [
+    {
+      "kind": "reorder",
+      "scope": "file",
+      "file": "src/module.ts",
+      "before": [
+        {
+          "name": "beta",
+          "qualifiedName": "beta",
+          "span": {
+            "start": {
+              "line": 1,
+              "column": 8
+            },
+            "end": {
+              "line": 4,
+              "column": 2
+            }
+          }
+        },
+        {
+          "name": "alpha",
+          "qualifiedName": "alpha",
+          "span": {
+            "start": {
+              "line": 6,
+              "column": 8
+            },
+            "end": {
+              "line": 9,
+              "column": 2
+            }
+          }
+        },
+        {
+          "name": "Bag",
+          "qualifiedName": "Bag",
+          "span": {
+            "start": {
+              "line": 11,
+              "column": 8
+            },
+            "end": {
+              "line": 21,
+              "column": 2
+            }
+          }
+        }
+      ],
+      "after": [
+        {
+          "name": "alpha",
+          "qualifiedName": "alpha",
+          "span": {
+            "start": {
+              "line": 1,
+              "column": 8
+            },
+            "end": {
+              "line": 4,
+              "column": 2
+            }
+          }
+        },
+        {
+          "name": "beta",
+          "qualifiedName": "beta",
+          "span": {
+            "start": {
+              "line": 6,
+              "column": 8
+            },
+            "end": {
+              "line": 9,
+              "column": 2
+            }
+          }
+        },
+        {
+          "name": "Bag",
+          "qualifiedName": "Bag",
+          "span": {
+            "start": {
+              "line": 11,
+              "column": 8
+            },
+            "end": {
+              "line": 21,
+              "column": 2
+            }
+          }
+        }
+      ],
+      "confidence": 0.93
+    },
+    {
+      "kind": "reorder",
+      "scope": "class",
+      "file": "src/module.ts",
+      "container": "Bag",
+      "before": [
+        {
+          "name": "second",
+          "qualifiedName": "Bag.second",
+          "span": {
+            "start": {
+              "line": 12,
+              "column": 3
+            },
+            "end": {
+              "line": 15,
+              "column": 4
+            }
+          }
+        },
+        {
+          "name": "first",
+          "qualifiedName": "Bag.first",
+          "span": {
+            "start": {
+              "line": 17,
+              "column": 3
+            },
+            "end": {
+              "line": 20,
+              "column": 4
+            }
+          }
+        }
+      ],
+      "after": [
+        {
+          "name": "first",
+          "qualifiedName": "Bag.first",
+          "span": {
+            "start": {
+              "line": 12,
+              "column": 3
+            },
+            "end": {
+              "line": 15,
+              "column": 4
+            }
+          }
+        },
+        {
+          "name": "second",
+          "qualifiedName": "Bag.second",
+          "span": {
+            "start": {
+              "line": 17,
+              "column": 3
+            },
+            "end": {
+              "line": 20,
+              "column": 4
+            }
+          }
+        }
+      ],
+      "confidence": 0.93
+    }
+  ],
+  "ignoredFormatting": [],
+  "files": [
+    {
+      "path": "src/module.ts",
+      "status": "modified",
+      "language": "typescript"
+    }
+  ],
+  "parseDiagnostics": [],
+  "highlights": [
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "src/module.ts",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 8
+        },
+        "end": {
+          "line": 4,
+          "column": 2
+        }
+      },
+      "kind": "reorder"
+    },
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "src/module.ts",
+      "span": {
+        "start": {
+          "line": 6,
+          "column": 8
+        },
+        "end": {
+          "line": 9,
+          "column": 2
+        }
+      },
+      "kind": "reorder"
+    },
+    {
+      "opIndex": 0,
+      "side": "left",
+      "file": "src/module.ts",
+      "span": {
+        "start": {
+          "line": 11,
+          "column": 8
+        },
+        "end": {
+          "line": 21,
+          "column": 2
+        }
+      },
+      "kind": "reorder"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "src/module.ts",
+      "span": {
+        "start": {
+          "line": 1,
+          "column": 8
+        },
+        "end": {
+          "line": 4,
+          "column": 2
+        }
+      },
+      "kind": "reorder"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "src/module.ts",
+      "span": {
+        "start": {
+          "line": 6,
+          "column": 8
+        },
+        "end": {
+          "line": 9,
+          "column": 2
+        }
+      },
+      "kind": "reorder"
+    },
+    {
+      "opIndex": 0,
+      "side": "right",
+      "file": "src/module.ts",
+      "span": {
+        "start": {
+          "line": 11,
+          "column": 8
+        },
+        "end": {
+          "line": 21,
+          "column": 2
+        }
+      },
+      "kind": "reorder"
+    },
+    {
+      "opIndex": 1,
+      "side": "left",
+      "file": "src/module.ts",
+      "span": {
+        "start": {
+          "line": 12,
+          "column": 3
+        },
+        "end": {
+          "line": 15,
+          "column": 4
+        }
+      },
+      "kind": "reorder"
+    },
+    {
+      "opIndex": 1,
+      "side": "left",
+      "file": "src/module.ts",
+      "span": {
+        "start": {
+          "line": 17,
+          "column": 3
+        },
+        "end": {
+          "line": 20,
+          "column": 4
+        }
+      },
+      "kind": "reorder"
+    },
+    {
+      "opIndex": 1,
+      "side": "right",
+      "file": "src/module.ts",
+      "span": {
+        "start": {
+          "line": 12,
+          "column": 3
+        },
+        "end": {
+          "line": 15,
+          "column": 4
+        }
+      },
+      "kind": "reorder"
+    },
+    {
+      "opIndex": 1,
+      "side": "right",
+      "file": "src/module.ts",
+      "span": {
+        "start": {
+          "line": 17,
+          "column": 3
+        },
+        "end": {
+          "line": 20,
+          "column": 4
+        }
+      },
+      "kind": "reorder"
+    }
+  ],
+  "sources": {
+    "left": {
+      "src/module.ts": "export function beta(n: number): number {\n  const value = n + 2;\n  return value;\n}\n\nexport function alpha(n: number): number {\n  const value = n + 1;\n  return value;\n}\n\nexport class Bag {\n  second(): number {\n    const value = 2;\n    return value;\n  }\n\n  first(): number {\n    const value = 1;\n    return value;\n  }\n}\n"
+    },
+    "right": {
+      "src/module.ts": "export function alpha(n: number): number {\n  const value = n + 1;\n  return value;\n}\n\nexport function beta(n: number): number {\n  const value = n + 2;\n  return value;\n}\n\nexport class Bag {\n  first(): number {\n    const value = 1;\n    return value;\n  }\n\n  second(): number {\n    const value = 2;\n    return value;\n  }\n}\n"
+    }
+  }
+}
