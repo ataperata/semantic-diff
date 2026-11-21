@@ -1,4 +1,5 @@
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, symlinkSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { analyzePaths, analyzeSnapshots } from "../src/index.js";
@@ -100,6 +101,25 @@ describe("large files", () => {
     );
     expect(report.parseDiagnostics).toEqual([]);
     expect(report.operations.map((operation) => operation.kind)).toEqual(["logic-edit"]);
+  });
+});
+
+describe("directory loading", () => {
+  it("follows file symlinks like the ones git difftool -d creates", () => {
+    const root = mkdtempSync(path.join(tmpdir(), "semantic-diff-links-"));
+    try {
+      const work = path.join(root, "work");
+      const left = path.join(root, "left");
+      const right = path.join(root, "right");
+      for (const dir of [work, left, right]) mkdirSync(dir);
+      writeFileSync(path.join(left, "m.ts"), "export function foo(a: number) {\n  return a + 1;\n}\n");
+      writeFileSync(path.join(work, "m.ts"), "export function bar(a: number) {\n  return a + 1;\n}\n");
+      symlinkSync(path.join(work, "m.ts"), path.join(right, "m.ts"));
+      const report = analyzePaths(left, right, { embedSources: false });
+      expect(report.operations.map((operation) => operation.kind)).toEqual(["rename"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 });
 

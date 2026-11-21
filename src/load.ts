@@ -38,7 +38,17 @@ export function loadDirectory(directory: string, label = directory): Snapshot {
         walk(full);
         continue;
       }
-      if (!entry.isFile()) continue;
+      // git difftool -d links unchanged working-tree files into its temp tree,
+      // so follow file symlinks (but not directory ones, to avoid cycles).
+      let isFile = entry.isFile();
+      if (entry.isSymbolicLink()) {
+        try {
+          isFile = statSync(full).isFile();
+        } catch {
+          continue;
+        }
+      }
+      if (!isFile) continue;
       const relative = path.relative(root, full).split(path.sep).join("/");
       if (!grammarOf(relative)) continue;
       const info = statSync(full);
