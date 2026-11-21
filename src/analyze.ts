@@ -39,8 +39,11 @@ interface Explanation {
 const KIND_ORDER = ["rename", "rename-move", "move", "extract", "inline", "signature-change", "reorder", "logic-edit", "add", "remove"];
 
 export function analyzeSnapshots(left: Snapshot, right: Snapshot, options: AnalyzeOptions = {}): Report {
-  const leftParsed = parseSnapshot(left);
-  const rightParsed = parseSnapshot(right);
+  // Most files are identical on both sides. Parsing is the dominant cost and
+  // ParsedFile is never mutated, so the right side reuses the left's result.
+  const parseCache = new Map<string, ParsedFile | null>();
+  const leftParsed = parseSnapshot(left, parseCache);
+  const rightParsed = parseSnapshot(right, parseCache);
   const formatting = new Set(formattingFiles(leftParsed, rightParsed));
   const leftSymbols = leftParsed.flatMap((file) => file.symbols);
   const rightSymbols = rightParsed.flatMap((file) => file.symbols);
@@ -265,10 +268,16 @@ export function analyzeSnapshots(left: Snapshot, right: Snapshot, options: Analy
   return report;
 }
 
-function parseSnapshot(snapshot: Snapshot): ParsedFile[] {
+function parseSnapshot(snapshot: Snapshot, cache: Map<string, ParsedFile | null>): ParsedFile[] {
   const parsed: ParsedFile[] = [];
   for (const file of [...snapshot.files].sort((a, b) => a.path.localeCompare(b.path))) {
-    const result = parseFile(file.path, file.text.replace(/\r\n/g, "\n"));
+    const text = file.text.replace(/\r\n/g, "\n");
+    const key = file.path + "\0" + text;
+    let result = cache.get(key);
+    if (result === undefined) {
+      result = parseFile(file.path, text);
+      cache.set(key, result);
+    }
     if (result) parsed.push(result);
   }
   return parsed;

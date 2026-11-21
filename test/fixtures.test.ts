@@ -196,3 +196,18 @@ function summarizeOp(operation: Operation): unknown {
   }
   return operation;
 }
+
+describe("unchanged and renamed bodies", () => {
+  const snapshot = (label: string, files: Record<string, string>) => ({
+    label,
+    files: Object.entries(files).map(([file, text]) => ({ path: file, text })),
+  });
+  const kinds = (report: ReturnType<typeof analyzeSnapshots>) =>
+    report.operations.map((operation) => `${operation.kind}:${"symbol" in operation ? operation.symbol.name : "to" in operation ? operation.to.name : ""}`).sort();
+
+  it("reports nothing for files identical on both sides", () => {
+    const text = "export function a(x: number) {\n  return x + 1;\n}\nexport class C {\n  n = 1;\n  m() {\n    return a(this.n);\n  }\n}\n";
+    const report = analyzeSnapshots(snapshot("l", { "a.ts": text, "b.ts": text }), snapshot("r", { "a.ts": text, "b.ts": text }), { embedSources: false });
+    expect(report.operations).toEqual([]);
+  });
+});
