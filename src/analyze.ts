@@ -323,13 +323,17 @@ function matchSymbols(left: Symbol[], right: Symbol[]): Match[] {
   const usedLeft = new Set<string>();
   const usedRight = new Set<string>();
   const rightByAnchor = new Map<string, Symbol>();
-  for (const symbol of right) rightByAnchor.set(anchorKey(symbol), symbol);
+  const rightBodies = new Set<string>();
+  for (const symbol of right) {
+    rightByAnchor.set(anchorKey(symbol), symbol);
+    rightBodies.add(symbol.kind + "\0" + symbol.bodyHash);
+  }
 
   for (const symbol of left) {
     const candidate = rightByAnchor.get(anchorKey(symbol));
     if (!candidate || usedRight.has(candidate.id)) continue;
-    const clonedBody = right.some((other) => other.id !== candidate.id && other.bodyHash === symbol.bodyHash && other.kind === symbol.kind);
-    if (clonedBody && symbol.bodyHash !== candidate.bodyHash) continue;
+    // The body now lives in another right-side symbol, so the anchor is not the real match.
+    if (symbol.bodyHash !== candidate.bodyHash && rightBodies.has(symbol.kind + "\0" + symbol.bodyHash)) continue;
     matches.push({ left: symbol, right: candidate, via: "anchor" });
     usedLeft.add(symbol.id);
     usedRight.add(candidate.id);

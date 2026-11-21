@@ -210,4 +210,15 @@ describe("unchanged and renamed bodies", () => {
     const report = analyzeSnapshots(snapshot("l", { "a.ts": text, "b.ts": text }), snapshot("r", { "a.ts": text, "b.ts": text }), { embedSources: false });
     expect(report.operations).toEqual([]);
   });
+
+  it("follows a body that moved to another name instead of the anchor", () => {
+    const report = analyzeSnapshots(
+      snapshot("l", { "m.ts": "export function foo(a: number) {\n  return a * 2 + 7;\n}\n" }),
+      snapshot("r", {
+        "m.ts": "export function foo(a: number) {\n  return a - 1;\n}\nexport function bar(a: number) {\n  return a * 2 + 7;\n}\n",
+      }),
+      { embedSources: false },
+    );
+    expect(kinds(report)).toEqual(["add:foo", "rename:bar"]);
+  });
 });
