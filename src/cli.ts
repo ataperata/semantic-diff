@@ -118,7 +118,13 @@ function serveViewer(reportPath: string | undefined, port: number): void {
       send(response, 200, "application/json", JSON.stringify(report));
       return;
     }
-    const relative = decodeURIComponent(url.pathname === "/" ? "/index.html" : url.pathname);
+    let relative: string;
+    try {
+      relative = decodeURIComponent(url.pathname === "/" ? "/index.html" : url.pathname);
+    } catch {
+      send(response, 400, "text/plain", "bad request");
+      return;
+    }
     const file = safeJoin(root, relative);
     if (!file || !existsSync(file) || !statSync(file).isFile()) {
       send(response, 404, "text/plain", "not found");
