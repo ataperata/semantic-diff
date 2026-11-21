@@ -1,4 +1,6 @@
 import { spawnSync } from "node:child_process";
+import { mkdtempSync, rmSync, symlinkSync } from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -30,5 +32,18 @@ describe("cli", () => {
     const report = JSON.parse(result.stdout) as { tool: string; operations: Array<{ kind: string }> };
     expect(report.tool).toBe("semantic-diff");
     expect(report.operations.map((operation) => operation.kind)).toEqual(["inline"]);
+  });
+
+  it("runs when invoked through a symlink, as npm installs bins", () => {
+    const directory = mkdtempSync(path.join(tmpdir(), "semantic-diff-bin-"));
+    try {
+      const link = path.join(directory, "semantic-diff.ts");
+      symlinkSync(cli, link);
+      const result = spawnSync("npx", ["tsx", link, "--help"], { encoding: "utf8" });
+      expect(result.status).toBe(0);
+      expect(result.stdout).toContain("AST-aware diffs");
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
   });
 });
