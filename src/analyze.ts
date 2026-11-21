@@ -1,5 +1,5 @@
 import { diffTrees, type DiffNode } from "./diff/treeDiff.js";
-import { findContiguous, isSimpleReturn, rewriteNames, type IrNode } from "./parse/ir.js";
+import { findContiguous, irKey, isSimpleReturn, rewriteNames, type IrNode } from "./parse/ir.js";
 import {
   moduleMatchesFile,
   parseFile,
@@ -447,7 +447,12 @@ function logicEdits(
   leftText: Map<string, string>,
   rightText: Map<string, string>,
 ): AstEdit[] {
-  const rewritten = rewriteNames(match.left.body, new Set(match.left.bound), functionRenames, methodRenames);
+  const noRenames = functionRenames.size === 0 && methodRenames.size === 0;
+  // diffTrees finds nothing between trees with the same IR key, so skip the
+  // hashing and alignment for the (usually many) bodies that did not change.
+  if (noRenames && match.left.fieldKey === match.right.fieldKey) return [];
+  const rewritten = noRenames ? match.left.body : rewriteNames(match.left.body, new Set(match.left.bound), functionRenames, methodRenames);
+  if (!noRenames && irKey(rewritten) === match.right.fieldKey) return [];
   let edits = diffTrees(asDiff(rewritten), asDiff(match.right.body));
   if (explanation) edits = edits.filter((edit) => !explainedEdit(edit, explanation));
   const beforeSource = leftText.get(match.left.file) ?? "";

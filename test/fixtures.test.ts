@@ -221,4 +221,11 @@ describe("unchanged and renamed bodies", () => {
     );
     expect(kinds(report)).toEqual(["add:foo", "rename:bar"]);
   });
+
+  it("only flags callers whose text disagrees with a rename", () => {
+    const left = "export function foo(a: number) {\n  return a * 2 + 7;\n}\nexport function updated() {\n  return foo(1);\n}\nexport function stale() {\n  return foo(2);\n}\n";
+    const right = "export function bar(a: number) {\n  return a * 2 + 7;\n}\nexport function updated() {\n  return bar(1);\n}\nexport function stale() {\n  return foo(2);\n}\n";
+    const report = analyzeSnapshots(snapshot("l", { "m.ts": left }), snapshot("r", { "m.ts": right }), { embedSources: false });
+    expect(kinds(report)).toEqual(["logic-edit:stale", "rename:bar"]);
+  });
 });
