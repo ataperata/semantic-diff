@@ -25,7 +25,7 @@ export interface SyntaxNode {
 
 interface TreeParser {
   setLanguage(language: unknown): void;
-  parse(source: string): { rootNode: SyntaxNode };
+  parse(source: string, oldTree?: unknown, options?: { bufferSize?: number }): { rootNode: SyntaxNode };
 }
 
 export type Grammar = "typescript" | "tsx" | "python";
@@ -54,5 +54,7 @@ export function parseSource(source: string, grammar: Grammar): SyntaxNode {
     const languages = require("tree-sitter-typescript") as { typescript: unknown; tsx: unknown };
     parser.setLanguage(grammar === "tsx" ? languages.tsx : languages.typescript);
   }
-  return parser.parse(source).rootNode;
+  // node-tree-sitter rejects strings that do not fit its default 32 KiB buffer
+  // with "Invalid argument", so size the buffer to the input.
+  return parser.parse(source, undefined, { bufferSize: Math.max(32 * 1024, source.length * 2 + 1) }).rootNode;
 }

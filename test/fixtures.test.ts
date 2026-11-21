@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { analyzePaths } from "../src/index.js";
+import { analyzePaths, analyzeSnapshots } from "../src/index.js";
 import type { Operation } from "../src/types.js";
 
 interface ExpectedOperation {
@@ -85,6 +85,22 @@ describe("semantic fixtures", () => {
       });
     }
   }
+});
+
+describe("large files", () => {
+  it("parses sources larger than the default tree-sitter buffer", () => {
+    const body = (bump: number) =>
+      Array.from({ length: 1200 }, (_, i) => `export function f${i}(x: number): number {\n  return x + ${i === 5 ? i + bump : i};\n}\n`).join("\n");
+    const before = body(0);
+    expect(before.length).toBeGreaterThan(32 * 1024);
+    const report = analyzeSnapshots(
+      { label: "before", files: [{ path: "big.ts", text: before }] },
+      { label: "after", files: [{ path: "big.ts", text: body(1) }] },
+      { embedSources: false },
+    );
+    expect(report.parseDiagnostics).toEqual([]);
+    expect(report.operations.map((operation) => operation.kind)).toEqual(["logic-edit"]);
+  });
 });
 
 function operationMatches(operation: Operation, expected: ExpectedOperation): boolean {
