@@ -15,30 +15,60 @@ function isPunctuation(text: string): boolean {
   return text.length > 0 && /^[()[\]{},.;:`'"]+$/.test(text);
 }
 
-export function toIr(node: SyntaxNode): IrNode | null {
-  if (COMMENT_TYPES.has(node.type)) return null;
+/**
+ * IR subtrees of one parse, keyed by syntax node type and span. Lets symbol
+ * extraction reuse the file-level IR instead of walking each body through the
+ * native bindings a second time. A key seen twice maps to null and falls back
+ * to a fresh conversion.
+ */
+export type IrIndex = Map<string, IrNode | null>;
+
+function indexKey(type: string, span: Span): string {
+  return `${type}@${span.start.line}:${span.start.column}-${span.end.line}:${span.end.column}`;
+}
+
+export function toIr(node: SyntaxNode, index?: IrIndex): IrNode | null {
+  const type = node.type;
+  if (COMMENT_TYPES.has(type)) return null;
+  let ir: IrNode;
   if (!node.isNamed) {
-    if (isPunctuation(node.text) || node.text.trim() === "") return null;
-    return {
+    const text = node.text;
+    if (isPunctuation(text) || text.trim() === "") return null;
+    ir = {
       type: "token",
-      text: node.text,
+      text,
       children: [],
       span: spanFromTreeSitter(node.startPosition, node.endPosition),
     };
+  } else {
+    const children: IrNode[] = [];
+    for (let i = 0; i < node.childCount; i++) {
+      const child = node.child(i);
+      if (!child) continue;
+      const converted = toIr(child, index);
+      if (converted) children.push(converted);
+    }
+    ir = {
+      type,
+      text: children.length === 0 ? node.text : null,
+      children,
+      span: spanFromTreeSitter(node.startPosition, node.endPosition),
+    };
   }
-  const children: IrNode[] = [];
-  for (let i = 0; i < node.childCount; i++) {
-    const child = node.child(i);
-    if (!child) continue;
-    const ir = toIr(child);
-    if (ir) children.push(ir);
+  if (index) {
+    const key = indexKey(type, ir.span);
+    index.set(key, index.has(key) ? null : ir);
   }
-  return {
-    type: node.type,
-    text: children.length === 0 ? node.text : null,
-    children,
-    span: spanFromTreeSitter(node.startPosition, node.endPosition),
-  };
+  return ir;
+}
+
+/** IR for `node`, taken from `index` when the file-level conversion already built it. */
+export function irOf(node: SyntaxNode, index: IrIndex | undefined): IrNode | null {
+  if (index) {
+    const hit = index.get(indexKey(node.type, spanFromTreeSitter(node.startPosition, node.endPosition)));
+    if (hit) return hit;
+  }
+  return toIr(node);
 }
 
 export function irKey(node: IrNode): string {

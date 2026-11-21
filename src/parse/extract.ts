@@ -1,7 +1,7 @@
 import { sha1 } from "../hash.js";
 import { spanContains, spanFromTreeSitter, type Span } from "../span.js";
 import type { Language, SymbolKind } from "../types.js";
-import { irKey, skeletonsOf, statementNodes, structuralHash, toIr, type IrNode } from "./ir.js";
+import { irKey, irOf, skeletonsOf, statementNodes, structuralHash, toIr, type IrIndex, type IrNode } from "./ir.js";
 import { parseSource, type Grammar, type SyntaxNode } from "./native.js";
 
 export interface Param {
@@ -100,15 +100,17 @@ export function parseFile(file: string, text: string): ParsedFile | null {
     };
   }
   if (root.hasError) diagnostics.push("parser recovered from a syntax error; symbol matching may be incomplete");
-  const tree = toIr(root);
-  const symbols = extractSymbols(file, language, grammar, root);
+  const index: IrIndex = new Map();
+  const tree = toIr(root, index);
+  const symbols = extractSymbols(file, language, grammar, root, index);
+  const { imports, calls } = extractImportsAndCalls(root, file, grammar);
   return {
     path: file,
     language,
     text,
     symbols,
-    imports: extractImports(root, file, grammar),
-    calls: extractCallSites(root, grammar),
+    imports,
+    calls,
     treeKey: tree ? irKey(tree) : "",
     diagnostics,
   };
@@ -154,7 +156,7 @@ function normalizePosix(file: string): string {
   return parts.join("/");
 }
 
-function extractSymbols(file: string, language: Language, grammar: Grammar, root: SyntaxNode): Symbol[] {
+function extractSymbols(file: string, language: Language, grammar: Grammar, root: SyntaxNode, index: IrIndex): Symbol[] {
   const symbols: Symbol[] = [];
   const visit = (node: SyntaxNode, parent?: string, decorators: string[] = []): void => {
     if (node.type === "program" || node.type === "module") {
@@ -173,7 +175,7 @@ function extractSymbols(file: string, language: Language, grammar: Grammar, root
       return;
     }
     if (node.type === "class_declaration" || node.type === "class_definition") {
-      const created = makeClass(node, file, language, grammar, decorators);
+      const created = makeClass(node, file, language, grammar, decorators, index);
       if (created) {
         symbols.push(created);
         const body = node.childForFieldName("body");
@@ -185,20 +187,20 @@ function extractSymbols(file: string, language: Language, grammar: Grammar, root
     }
     if (node.type === "function_declaration" || node.type === "function_definition" || node.type === "method_definition") {
       const kind: SymbolKind = parent || node.type === "method_definition" ? "method" : "function";
-      const created = makeFunction(node, kind, parent, file, language, grammar, decorators.concat(decoratorList(node)));
+      const created = makeFunction(node, kind, parent, file, language, grammar, decorators.concat(decoratorList(node)), index);
       if (created) symbols.push(created);
       return;
     }
     if (node.type === "lexical_declaration" || node.type === "variable_declaration") {
       for (const child of node.children) {
         if (child.type !== "variable_declarator") continue;
-        const created = makeDeclarator(child, parent, file, language, grammar);
+        const created = makeDeclarator(child, parent, file, language, grammar, index);
         if (created) symbols.push(created);
       }
       return;
     }
     if (node.type === "public_field_definition") {
-      const created = makeDeclarator(node, parent, file, language, grammar);
+      const created = makeDeclarator(node, parent, file, language, grammar, index);
       if (created) symbols.push(created);
     }
   };
@@ -219,6 +221,7 @@ function makeClass(
   language: Language,
   grammar: Grammar,
   decorators: string[],
+  index: IrIndex,
 ): Symbol | null {
   const name = readIdentifier(node) ?? "anonymous";
   const bodyNode = node.childForFieldName("body");
@@ -226,7 +229,7 @@ function makeClass(
   if (bodyNode) {
     for (const child of bodyNode.children) {
       if (isNestedSymbol(child)) continue;
-      const ir = toIr(child);
+      const ir = irOf(child, index);
       if (ir) fields.push(ir);
     }
   }
@@ -266,11 +269,12 @@ function makeFunction(
   language: Language,
   grammar: Grammar,
   decorators: string[],
+  index: IrIndex,
 ): Symbol | null {
   const name = readIdentifier(node);
   const bodyNode = node.childForFieldName("body");
   if (!name || !bodyNode) return null;
-  const body = toIr(bodyNode);
+  const body = irOf(bodyNode, index);
   if (!body) return null;
   const paramsNode = node.childForFieldName("parameters") ?? node.children.find((child) => child.type === "formal_parameters" || child.type === "parameters") ?? null;
   const signature: Signature = {
@@ -302,6 +306,7 @@ function makeDeclarator(
   file: string,
   language: Language,
   grammar: Grammar,
+  index: IrIndex,
 ): Symbol | null {
   const nameNode = node.childForFieldName("name");
   const value = node.childForFieldName("value");
@@ -313,7 +318,7 @@ function makeDeclarator(
       : readIdentifier(nameNode);
   const bodyNode = value.childForFieldName("body");
   if (!name || !bodyNode) return null;
-  const body = toIr(bodyNode);
+  const body = irOf(bodyNode, index);
   if (!body) return null;
   const paramsNode = value.childForFieldName("parameters");
   return finishSymbol({
@@ -563,19 +568,6 @@ function collectBodyCalls(node: SyntaxNode, grammar: Grammar): string[] {
   return names;
 }
 
-function extractCallSites(root: SyntaxNode, grammar: Grammar): CallSite[] {
-  const calls: CallSite[] = [];
-  const walk = (node: SyntaxNode): void => {
-    if ((grammar === "python" && node.type === "call") || (grammar !== "python" && node.type === "call_expression")) {
-      const callee = describeCallee(node.childForFieldName("function"));
-      if (callee) calls.push({ ...callee, span: spanFromTreeSitter(node.startPosition, node.endPosition) });
-    }
-    for (const child of node.children) walk(child);
-  };
-  walk(root);
-  return calls;
-}
-
 function describeCallee(node: SyntaxNode | null): { name: string; form: "call" | "method" } | null {
   if (!node) return null;
   if (node.type === "identifier") return { name: node.text, form: "call" };
@@ -590,16 +582,23 @@ function describeCallee(node: SyntaxNode | null): { name: string; form: "call" |
   return null;
 }
 
-function extractImports(root: SyntaxNode, file: string, grammar: Grammar): ImportSite[] {
+/** One pass over the file collects both import statements and call sites. */
+function extractImportsAndCalls(root: SyntaxNode, file: string, grammar: Grammar): { imports: ImportSite[]; calls: CallSite[] } {
   const imports: ImportSite[] = [];
+  const calls: CallSite[] = [];
+  const callType = grammar === "python" ? "call" : "call_expression";
   const walk = (node: SyntaxNode): void => {
-    if (grammar === "python" && node.type === "import_from_statement") imports.push(...pythonFromImport(node, file));
-    else if (grammar === "python" && node.type === "import_statement") imports.push(...pythonImport(node, file));
-    else if (grammar !== "python" && node.type === "import_statement") imports.push(...typescriptImport(node, file));
+    const type = node.type;
+    if (type === callType) {
+      const callee = describeCallee(node.childForFieldName("function"));
+      if (callee) calls.push({ ...callee, span: spanFromTreeSitter(node.startPosition, node.endPosition) });
+    } else if (grammar === "python" && type === "import_from_statement") imports.push(...pythonFromImport(node, file));
+    else if (grammar === "python" && type === "import_statement") imports.push(...pythonImport(node, file));
+    else if (grammar !== "python" && type === "import_statement") imports.push(...typescriptImport(node, file));
     for (const child of node.children) walk(child);
   };
   walk(root);
-  return imports;
+  return { imports, calls };
 }
 
 function typescriptImport(node: SyntaxNode, file: string): ImportSite[] {
